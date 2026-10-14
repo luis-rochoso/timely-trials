@@ -24,12 +24,11 @@ class PlayerCharacter {
     int maxHealth {0};
     int currentHealth {0};
 
-    Rectangle hitbox {0, 0, PLAYER_WIDTH, PLAYER_HEIGHT};
-
     // MeleeAttack meleeAtk;
     // ProjectileAttack rangedAtk;
 
     public:
+    Vector2 position {50, 50};
 
     PlayerCharacter() = default;
 
@@ -44,7 +43,9 @@ class PlayerCharacter {
     // PlayerTag getTag() {return tag;}
     int getMaxHP() {return maxHealth;}
     int getCurrentHP() {return currentHealth;}
-    Rectangle getHitbox() {return hitbox;}
+    Rectangle getHitbox() {
+        return {position.x - (PLAYER_WIDTH/2), position.y - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT};
+    }
 
     void takeDamage(int damage) {
 

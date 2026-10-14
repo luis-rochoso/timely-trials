@@ -2,8 +2,7 @@
 #define CONTROL_HPP
 
 #include "raylib.h"
-#include "playerCharacter.hpp"
-#include "level.hpp"
+#include "controlutils.hpp"
 
 // Constant definitions
 short SCREEN_WIDTH = 800;
@@ -26,7 +25,8 @@ void init() {
 }
 
 void update() {
-
+    float delta = GetFrameTime();
+    UpdatePlayer(&map.player, map.getEnvItems(), delta);
 }
 
 void render() {
