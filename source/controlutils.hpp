@@ -10,7 +10,7 @@
 
 void UpdatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float delta) {
     // Handles jumping
-    if (IsKeyDown(KEY_SPACE) && player->state != airborne) {
+    if (IsKeyDown(KEY_UP) && player->state != airborne) {
         player->setVerticalVelocity(-PLAYER_JUMP_SPEED);
         player->state = airborne;
     }
@@ -53,7 +53,7 @@ void UpdatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float
         player->position.x += PLAYER_HOR_SPEED*delta;
         isMovingHorizontally = true;
     }
-    if (isMovingHorizontally and player->state != airborne) player->state = running;
+    if (isMovingHorizontally && player->state != airborne) player->state = running;
 }
 
 

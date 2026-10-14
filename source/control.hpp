@@ -1,8 +1,7 @@
 #ifndef CONTROL_HPP
 #define CONTROL_HPP
 
-#include "raylib.h"
-#include "controlutils.hpp"
+#include "interface.hpp"
 
 // Constant definitions
 short SCREEN_WIDTH = 800;
@@ -58,17 +57,14 @@ void render() {
     BeginDrawing();
         ClearBackground(BLACK);
 
-        for (auto it = map.getEnvItems()->begin(); it != map.getEnvItems()->end(); ++it) {
-            DrawRectangleRec(it->hitbox, it->color);
-        }
+        renderEnvItems(map.getEnvItems());
+        renderPlayer(map.player, playerColor);
+        renderPlayerState(map.player);
 
-        DrawRectangleRec(map.player.getHitbox(), playerColor);
         DrawText(TextFormat("Delta (frame time): %f", GetFrameTime()), 650, 10, 10, WHITE);
 
         // Render player state
-        int width = MeasureText(map.player.stateToCString(), 12);
-        DrawText(map.player.stateToCString(), map.player.position.x - (width/2),
-                 map.player.position.y - (1.2 * PLAYER_HEIGHT), 12, WHITE);
+        
 
     EndDrawing();
 }

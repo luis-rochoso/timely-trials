@@ -5,8 +5,8 @@
 #include "attack.hpp"
 #include <string>
 
-int PLAYER_WIDTH {50};
-int PLAYER_HEIGHT {80};
+#define PLAYER_WIDTH 50
+#define PLAYER_HEIGHT 80
 
 enum PlayerState {
     idle, running, airborne
