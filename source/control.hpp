@@ -11,8 +11,8 @@ short SCREEN_HEIGHT = 450;
 
 // Global variables
 std::vector<EnvItem> mapLayout = {
-    {{200, 300, 500, 10}, 1, RED},
-    {{300, 200, 500, 20}, 1, BLUE}
+    {{0, 300, 500, 10}, 0, RED},
+    {{300, 200, 500, 20}, 0, BLUE}
 };
 
 Level map = Level(mapLayout);

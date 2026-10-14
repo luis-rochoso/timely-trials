@@ -23,12 +23,13 @@ class PlayerCharacter {
 
     int maxHealth {0};
     int currentHealth {0};
+    float verticalVelocity {0};
 
     // MeleeAttack meleeAtk;
     // ProjectileAttack rangedAtk;
 
     public:
-    Vector2 position {50, 50};
+    Vector2 position {0, 0};
 
     PlayerCharacter() = default;
 
@@ -43,6 +44,10 @@ class PlayerCharacter {
     // PlayerTag getTag() {return tag;}
     int getMaxHP() {return maxHealth;}
     int getCurrentHP() {return currentHealth;}
+    float getVerticalVelocity() {return verticalVelocity;}
+    void setVerticalVelocity(float newVelocity) {
+        verticalVelocity = newVelocity;
+    }
     Rectangle getHitbox() {
         return {position.x - (PLAYER_WIDTH/2), position.y - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT};
     }
