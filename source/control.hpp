@@ -12,7 +12,7 @@ short SCREEN_HEIGHT = 450;
 // Global variables
 std::vector<EnvItem> mapLayout = {
     {{0, 300, 500, 10}, 0, RED},
-    {{300, 200, 500, 20}, 0, BLUE}
+    {{300, 250, 500, 20}, 0, BLUE}
 };
 
 Level map = Level(mapLayout);
@@ -64,6 +64,11 @@ void render() {
 
         DrawRectangleRec(map.player.getHitbox(), playerColor);
         DrawText(TextFormat("Delta (frame time): %f", GetFrameTime()), 650, 10, 10, WHITE);
+
+        // Render player state
+        int width = MeasureText(map.player.stateToCString(), 12);
+        DrawText(map.player.stateToCString(), map.player.position.x - (width/2),
+                 map.player.position.y - (1.2 * PLAYER_HEIGHT), 12, WHITE);
 
     EndDrawing();
 }

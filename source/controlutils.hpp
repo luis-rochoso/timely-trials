@@ -4,13 +4,16 @@
 #include "playerCharacter.hpp"
 #include "level.hpp"
 
-#define PLAYER_HOR_SPD 200.0f
+#define PLAYER_HOR_SPEED 200.0f
+#define PLAYER_JUMP_SPEED 350.0F
 #define G 700
 
 void UpdatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float delta) {
-    if (IsKeyDown(KEY_LEFT)) player->position.x -= PLAYER_HOR_SPD*delta;
-    if (IsKeyDown(KEY_RIGHT)) player->position.x += PLAYER_HOR_SPD*delta;
-    // if (IsKeyDown(KEY_SPACE) && player->get);
+    // Handles jumping
+    if (IsKeyDown(KEY_SPACE) && player->state != airborne) {
+        player->setVerticalVelocity(-PLAYER_JUMP_SPEED);
+        player->state = airborne;
+    }
 
     // Handles standing
     bool hitObstacle = false;
@@ -36,10 +39,21 @@ void UpdatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float
     {
         player->position.y += player->getVerticalVelocity()*delta;
         player->increaseVerticalVelocity(G * delta);
-        // player->canJump = false;
+        player->state = airborne;
     }
-    // else player->canJump = true;
+    else player->state = idle;
 
+    // Handles horizontal movement
+    bool isMovingHorizontally = false;
+    if (IsKeyDown(KEY_LEFT)) {
+        player->position.x -= PLAYER_HOR_SPEED*delta;
+        isMovingHorizontally = true;
+    }
+    if (IsKeyDown(KEY_RIGHT)) {
+        player->position.x += PLAYER_HOR_SPEED*delta;
+        isMovingHorizontally = true;
+    }
+    if (isMovingHorizontally and player->state != airborne) player->state = running;
 }
 
 

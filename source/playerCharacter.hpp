@@ -8,17 +8,21 @@
 int PLAYER_WIDTH {50};
 int PLAYER_HEIGHT {80};
 
-// enum PlayerState {
-//     idle, running, jumping, falling
-// };
+enum PlayerState {
+    idle, running, airborne
+};
 
 // enum PlayerTag {
 //     bakali, belos, switchy, valarash
 // };
 
 class PlayerCharacter {
+    public:
+    Vector2 position {0, 0};
+    PlayerState state {idle};
+
+    private:
     std::string name {""};
-    // PlayerState state {idle};
     // PlayerTag tag;
 
     int maxHealth {0};
@@ -29,7 +33,6 @@ class PlayerCharacter {
     // ProjectileAttack rangedAtk;
 
     public:
-    Vector2 position {0, 0};
 
     PlayerCharacter() = default;
 
@@ -56,6 +59,19 @@ class PlayerCharacter {
     }
     Rectangle getHitbox() {
         return {position.x - (PLAYER_WIDTH/2), position.y - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT};
+    }
+    const char* stateToCString() {
+        switch (state)
+        {
+        case idle:
+            return "idle";
+        case running:
+            return "running";
+        case airborne:
+            return "airborne";
+        default:
+            return "";
+        }
     }
 
     void takeDamage(int damage) {
