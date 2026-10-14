@@ -35,7 +35,7 @@ void UpdatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float
     if (!hitObstacle)
     {
         player->position.y += player->getVerticalVelocity()*delta;
-        player->setVerticalVelocity(G * delta);
+        player->increaseVerticalVelocity(G * delta);
         // player->canJump = false;
     }
     // else player->canJump = true;

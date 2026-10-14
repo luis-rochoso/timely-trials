@@ -48,6 +48,12 @@ class PlayerCharacter {
     void setVerticalVelocity(float newVelocity) {
         verticalVelocity = newVelocity;
     }
+    void increaseVerticalVelocity(float increment) {
+        verticalVelocity += increment;
+    }
+    void decreaseVerticalVelocity(float decrement) {
+        verticalVelocity -= decrement;
+    }
     Rectangle getHitbox() {
         return {position.x - (PLAYER_WIDTH/2), position.y - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT};
     }

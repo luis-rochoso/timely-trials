@@ -63,6 +63,7 @@ void render() {
         }
 
         DrawRectangleRec(map.player.getHitbox(), playerColor);
+        DrawText(TextFormat("Delta (frame time): %f", GetFrameTime()), 650, 10, 10, WHITE);
 
     EndDrawing();
 }
