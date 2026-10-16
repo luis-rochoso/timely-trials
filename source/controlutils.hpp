@@ -56,15 +56,22 @@ void updatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float
     if (isMovingHorizontally && player->state != airborne) player->state = running;
 }
 
-// The player pushes the camera when approaching the screen border
+// The player pushes the camera when approaching the screen borders
 void updateCamera(Camera2D *camera, PlayerCharacter *player, std::vector<EnvItem>* envItems, float delta, int width, int height) {
-    
-    static Vector2 borderBox = { 0.2f, 0.2f };
 
-    Vector2 borderBoxWorldMin = GetScreenToWorld2D((Vector2){ (1 - borderBox.x)*0.5f*width, (1 - borderBox.y)*0.5f*height }, *camera);
-    Vector2 borderBoxWorldMax = GetScreenToWorld2D((Vector2){ (1 + borderBox.x)*0.5f*width, (1 + borderBox.y)*0.5f*height }, *camera);
-    camera->offset = (Vector2){ (1 - borderBox.x)*0.5f*width, (1 - borderBox.y)*0.5f*height };
+    // Create a smaller box around the center of the screen
+    static Vector2 borderBox = { 0.2f, 0.2f }; //!< Multiplicative constants
 
+    // Set the boundaries of the smaller box
+    // NOTE: GetScreenToWorld2D returns the position in the map for a given
+    // position in the camera screen
+    Vector2 borderBoxWorldMin = GetScreenToWorld2D({ (1 - borderBox.x)*0.5f*width, (1 - borderBox.y)*0.5f*height }, *camera);
+    Vector2 borderBoxWorldMax = GetScreenToWorld2D({ (1 + borderBox.x)*0.5f*width, (1 + borderBox.y)*0.5f*height }, *camera);
+
+    // Offsetting the camera's position prevents it from sticking to the player's position 
+    camera->offset = { (1 - borderBox.x)*0.5f*width, (1 - borderBox.y)*0.5f*height };
+
+    // The camera only moves if the player moves out of the borderBox
     if (player->position.x < borderBoxWorldMin.x) camera->target.x = player->position.x;
     if (player->position.y < borderBoxWorldMin.y) camera->target.y = player->position.y;
     if (player->position.x > borderBoxWorldMax.x) camera->target.x = borderBoxWorldMin.x + (player->position.x - borderBoxWorldMax.x);
