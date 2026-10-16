@@ -8,7 +8,7 @@
 #define PLAYER_JUMP_SPEED 350.0F
 #define G 700
 
-void UpdatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float delta) {
+void updatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float delta) {
     // Handles jumping
     if (IsKeyDown(KEY_UP) && player->state != airborne) {
         player->setVerticalVelocity(-PLAYER_JUMP_SPEED);
@@ -56,5 +56,20 @@ void UpdatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float
     if (isMovingHorizontally && player->state != airborne) player->state = running;
 }
 
+// The player pushes the camera when approaching the screen border
+void updateCamera(Camera2D *camera, PlayerCharacter *player, std::vector<EnvItem>* envItems, float delta, int width, int height) {
+    
+    static Vector2 borderBox = { 0.2f, 0.2f };
+
+    Vector2 borderBoxWorldMin = GetScreenToWorld2D((Vector2){ (1 - borderBox.x)*0.5f*width, (1 - borderBox.y)*0.5f*height }, *camera);
+    Vector2 borderBoxWorldMax = GetScreenToWorld2D((Vector2){ (1 + borderBox.x)*0.5f*width, (1 + borderBox.y)*0.5f*height }, *camera);
+    camera->offset = (Vector2){ (1 - borderBox.x)*0.5f*width, (1 - borderBox.y)*0.5f*height };
+
+    if (player->position.x < borderBoxWorldMin.x) camera->target.x = player->position.x;
+    if (player->position.y < borderBoxWorldMin.y) camera->target.y = player->position.y;
+    if (player->position.x > borderBoxWorldMax.x) camera->target.x = borderBoxWorldMin.x + (player->position.x - borderBoxWorldMax.x);
+    if (player->position.y > borderBoxWorldMax.y) camera->target.y = borderBoxWorldMin.y + (player->position.y - borderBoxWorldMax.y);
+
+}
 
 #endif

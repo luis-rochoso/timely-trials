@@ -4,8 +4,8 @@
 #include "interface.hpp"
 
 // Constant definitions
-short SCREEN_WIDTH = 800;
-short SCREEN_HEIGHT = 450;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 450;
 // PlayerCharacter BAKALI, BELOS, SWITCH, VALARASH;
 
 // Global variables
@@ -15,17 +15,23 @@ std::vector<EnvItem> mapLayout = {
 };
 
 Level map = Level(mapLayout);
+Camera2D cam = { 0 };
 
 // Functions
 void init() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Timely Trials");
-
     SetTargetFPS(60);
+
+    cam.target = map.player.position;
+    cam.offset = {GetRenderWidth()/2.0f, GetRenderHeight()/2.0f};
+    cam.rotation = 0.0f;
+    cam.zoom = 1.0f;
 }
 
 void update() {
     float delta = GetFrameTime();
-    UpdatePlayer(&map.player, map.getEnvItems(), delta);
+    updatePlayer(&map.player, map.getEnvItems(), delta);
+    updateCamera(&cam, &map.player, map.getEnvItems(), delta, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 void render() {
@@ -57,14 +63,15 @@ void render() {
     BeginDrawing();
         ClearBackground(BLACK);
 
-        renderEnvItems(map.getEnvItems());
-        renderPlayer(map.player, playerColor);
-        renderPlayerState(map.player);
+        // Things that are drawn relative to the camera position
+        // are rendered inside the Mode2D
+        BeginMode2D(cam);
+            renderEnvItems(map.getEnvItems());
+            renderPlayer(map.player, playerColor);
+            renderPlayerState(map.player);
+        EndMode2D();
 
         DrawText(TextFormat("Delta (frame time): %f", GetFrameTime()), 650, 10, 10, WHITE);
-
-        // Render player state
-        
 
     EndDrawing();
 }
