@@ -71,7 +71,12 @@ void render() {
             renderPlayerState(map.player);
         EndMode2D();
 
-        DrawText(TextFormat("Delta (frame time): %f", GetFrameTime()), 650, 10, 10, WHITE);
+        DrawText(TextFormat("HP: %i", map.player.getCurrentHP()),
+                 0.025*SCREEN_WIDTH, 0.02*SCREEN_HEIGHT, 30, WHITE);
+
+        DrawText(TextFormat("Delta (frame time): %f", GetFrameTime()),
+                 0.8*SCREEN_WIDTH, 0.02*SCREEN_HEIGHT, 10, WHITE);
+
 
     EndDrawing();
 }

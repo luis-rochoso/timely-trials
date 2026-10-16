@@ -25,8 +25,8 @@ class PlayerCharacter {
     std::string name {""};
     // PlayerTag tag;
 
-    int maxHealth {0};
-    int currentHealth {0};
+    int maxHealth {100};
+    int currentHealth {100};
     float verticalVelocity {0};
 
     // MeleeAttack meleeAtk;
