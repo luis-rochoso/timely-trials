@@ -83,7 +83,7 @@ class Entity {
         }
     }
 
-    Entity(EnemyTag enTag, int maxHP, Vector2 spawnPos) {
+    Entity(EnemyTag enTag, Vector2 spawnPos) { // Enemy
         tag = enemy;
         enemyTag = enTag;
 
@@ -109,6 +109,7 @@ class Entity {
         }
 
         currentHealth = maxHealth;
+        position = spawnPos;
     }
 
     bool isEnemy()  {return enemyTag != notEnemy;}

@@ -18,6 +18,7 @@ class Level {
 
     public:
     Entity player;
+    std::vector<Entity> enemies;
 
     Level();
 

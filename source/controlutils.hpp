@@ -106,4 +106,21 @@ void switchCharacter(Entity* player) {
 
 }
 
+void updateEnemies(std::vector<Entity> &enemies, std::vector<EnvItem>* envItems, float delta) {
+
+    for (int i = 0; i < enemies.size(); ++i) {
+        bool hitObstacle = false;
+        
+        // Handles falling
+        if (!hitObstacle)
+        {
+            enemies[i].position.y += enemies[i].getVerticalVelocity()*delta;
+            enemies[i].increaseVerticalVelocity(G * delta);
+            enemies[i].state = airborne;
+        }
+        else enemies[i].state = idle;
+    }
+
+}
+
 #endif

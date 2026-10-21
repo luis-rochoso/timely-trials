@@ -27,6 +27,9 @@ void init() {
     cam.offset = {GetRenderWidth()/2.0f, GetRenderHeight()/2.0f};
     cam.rotation = 0.0f;
     cam.zoom = 1.0f;
+
+    map.enemies.push_back(Entity(lizardfolk, {200, 200}));
+    map.enemies.push_back(Entity(rakshasa, {100, 100}));
 }
 
 void update() {
@@ -36,6 +39,7 @@ void update() {
 
     updatePlayer(&map.player, map.getEnvItems(), delta);
     updateCamera(&cam, &map.player, map.getEnvItems(), delta, SCREEN_WIDTH, SCREEN_HEIGHT);
+    updateEnemies(map.enemies, map.getEnvItems(), delta);
 }
 
 void render() {
@@ -72,6 +76,7 @@ void render() {
             renderEnvItems(map.getEnvItems());
             renderPlayer(map.player, playerColor);
             renderPlayerState(map.player);
+            renderEnemies(map.enemies);
         EndMode2D();
 
         DrawText(map.player.getName().c_str(),

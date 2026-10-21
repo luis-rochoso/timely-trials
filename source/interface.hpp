@@ -21,4 +21,28 @@ void renderPlayerState(Entity &player) {
              12, WHITE);
 }
 
+void renderEnemies(std::vector<Entity> &enemies) {
+
+    for (int i = 0; i < enemies.size(); ++i) {
+        Color enemyColor;
+
+        switch (enemies[i].getEnemyTag())
+        {
+        case lizardfolk:
+            enemyColor = DARKGREEN;
+            break;
+
+        case rakshasa:
+            enemyColor = ORANGE;
+            break;
+        
+        default:
+            break;
+        }
+
+        DrawRectangleRec(enemies[i].getHitbox(), enemyColor);
+    }
+
+}
+
 #endif
