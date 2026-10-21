@@ -50,15 +50,37 @@ class Entity {
     Entity() = default;
 
     // Parameterized constructors
-    Entity(std::string charName, int maxHP) { // Player
-        name = charName;
+    Entity(PlayerTag pTag) { // Player
         tag = player;
+        playerTag = pTag;
 
         width = PLAYER_WIDTH;
         height = PLAYER_HEIGHT;
 
-        maxHealth = maxHP;
+        maxHealth = 100;
         currentHealth = maxHealth;
+
+        switch (playerTag)
+        {
+        case bakali:
+            name = "Bala";
+            break;
+        
+        case belos:
+            name = "Belos";
+            break;
+
+        case switchy:
+            name = "SWITCH";
+            break;
+
+        case valarash:
+            name = "Valarash";
+            break;
+        
+        default:
+            break;
+        }
     }
 
     Entity(EnemyTag enTag, int maxHP, Vector2 spawnPos) {

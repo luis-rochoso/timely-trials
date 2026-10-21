@@ -4,7 +4,7 @@ int main() {
 
     init();
 
-    map.player = Entity("Mario", 100);
+    map.player = Entity(bakali);
 
     while(!WindowShouldClose()) {
         update();

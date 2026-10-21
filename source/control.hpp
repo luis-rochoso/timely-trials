@@ -35,30 +35,29 @@ void update() {
 }
 
 void render() {
-    Color playerColor = GREEN;
-    // Color playerColor;
+    Color playerColor;
 
-    // switch (map.player.getTag())
-    // {
-    // case bakali:
-    //     playerColor = YELLOW;
-    //     break;
+    switch (map.player.getPlayerTag())
+    {
+    case bakali:
+        playerColor = YELLOW;
+        break;
 
-    // case belos:
-    //     playerColor = DARKGREEN;
-    //     break;
+    case belos:
+        playerColor = DARKGREEN;
+        break;
 
-    // case switchy:
-    //     playerColor = GRAY;
-    //     break;
+    case switchy:
+        playerColor = GRAY;
+        break;
 
-    // case valarash:
-    //     playerColor = GREEN;
-    //     break;
+    case valarash:
+        playerColor = GREEN;
+        break;
     
-    // default:
-    //     break;
-    // }
+    default:
+        break;
+    }
 
     BeginDrawing();
         ClearBackground(BLACK);
