@@ -2,7 +2,7 @@
 #define LEVEL_HPP
 
 #include "raylib.h"
-#include "playerCharacter.hpp"
+#include "entity.hpp"
 #include <vector>
 
 // Environment Item: hitbox, traversable, color
@@ -17,7 +17,7 @@ class Level {
     std::vector<EnvItem> environmentItems;
 
     public:
-    PlayerCharacter player;
+    Entity player;
 
     Level();
 

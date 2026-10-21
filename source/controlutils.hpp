@@ -1,14 +1,14 @@
 #ifndef CONTROLUTILS_HPP
 #define CONTROLUTILS_HPP
 
-#include "playerCharacter.hpp"
+#include "entity.hpp"
 #include "level.hpp"
 
 #define PLAYER_HOR_SPEED 200.0f
 #define PLAYER_JUMP_SPEED 350.0F
 #define G 700
 
-void updatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float delta) {
+void updatePlayer(Entity* player, std::vector<EnvItem>* envItems, float delta) {
     // Handles jumping
     if (IsKeyDown(KEY_UP) && player->state != airborne) {
         player->setVerticalVelocity(-PLAYER_JUMP_SPEED);
@@ -57,7 +57,7 @@ void updatePlayer(PlayerCharacter* player, std::vector<EnvItem>* envItems, float
 }
 
 // The player pushes the camera when approaching the screen borders
-void updateCamera(Camera2D *camera, PlayerCharacter *player, std::vector<EnvItem>* envItems, float delta, int width, int height) {
+void updateCamera(Camera2D *camera, Entity *player, std::vector<EnvItem>* envItems, float delta, int width, int height) {
 
     // Create a smaller box around the center of the screen
     static Vector2 borderBox = { 0.2f, 0.2f }; //!< Multiplicative constants

@@ -8,12 +8,12 @@ const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 450;
 // PlayerCharacter BAKALI, BELOS, SWITCH, VALARASH;
 
-// Global variables
-std::vector<EnvItem> mapLayout = {
+const std::vector<EnvItem> mapLayout = {
     {{0, 300, 500, 10}, 0, RED},
     {{300, 250, 500, 20}, 0, BLUE}
 };
 
+// Global variables
 Level map = Level(mapLayout);
 Camera2D cam = { 0 };
 

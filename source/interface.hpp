@@ -9,7 +9,7 @@ void renderEnvItems(std::vector<EnvItem>* envItems) {
         }
 }
 
-void renderPlayer(PlayerCharacter &player, Color playerColor) {
+void renderPlayer(Entity &player, Color playerColor) {
     DrawRectangleRec(player.getHitbox(), playerColor);
 }
 

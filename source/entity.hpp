@@ -1,5 +1,5 @@
-#ifndef PLAYERCHAR_HPP
-#define PLAYERCHAR_HPP
+#ifndef ENTITY_HPP
+#define ENTITY_HPP
 
 #include "timer.hpp"
 #include "attack.hpp"
@@ -8,45 +8,97 @@
 #define PLAYER_WIDTH 50
 #define PLAYER_HEIGHT 80
 
-enum PlayerState {
+enum EntityState {
     idle, running, airborne
 };
 
-// enum PlayerTag {
-//     bakali, belos, switchy, valarash
-// };
+enum EntityTag {
+    enemy, player
+};
 
-class PlayerCharacter {
+enum EnemyTag {
+    notEnemy, lizardfolk, rakshasa
+};
+
+enum PlayerTag {
+    notPlayer, bakali, belos, switchy, valarash
+};
+
+class Entity {
     public:
-    Vector2 position {0, 0};
-    PlayerState state {idle};
+    Vector2 position  {0, 0};
+    EntityState state {idle};
 
     private:
-    std::string name {""};
-    // PlayerTag tag;
+    std::string name      {""};
+    EntityTag tag         {enemy};
+    EnemyTag enemyTag     {notEnemy};
+    PlayerTag playerTag   {notPlayer};
+    
 
-    int maxHealth {100};
-    int currentHealth {100};
+    int maxHealth          {25};
+    int currentHealth      {25};
     float verticalVelocity {0};
+    float width            {25};
+    float height           {25};
 
     // MeleeAttack meleeAtk;
     // ProjectileAttack rangedAtk;
 
     public:
 
-    PlayerCharacter() = default;
+    Entity() = default;
 
-    // Parameterized constructor
-    PlayerCharacter(std::string charName, int maxHP) {
+    // Parameterized constructors
+    Entity(std::string charName, int maxHP) { // Player
         name = charName;
+        tag = player;
+
+        width = PLAYER_WIDTH;
+        height = PLAYER_HEIGHT;
+
         maxHealth = maxHP;
+        currentHealth = maxHealth;
     }
 
+    Entity(EnemyTag enTag, int maxHP, Vector2 spawnPos) {
+        tag = enemy;
+        enemyTag = enTag;
+
+        switch (enemyTag)
+        {
+        case lizardfolk:
+            maxHealth = 25;
+            width = 50;
+            height = 90;
+            break;
+
+        case rakshasa:
+            maxHealth = 50;
+            width = 50;
+            height = 80;
+            break;
+        
+        default:
+            maxHealth = 25;
+            width = 50;
+            height = 80;
+            break;
+        }
+
+        currentHealth = maxHealth;
+    }
+
+    bool isEnemy()  {return enemyTag != notEnemy;}
+    bool isPlayer() {return playerTag != notPlayer;}
+
+    EnemyTag getEnemyTag() {return enemyTag;}
+    PlayerTag getPlayerTag() {return playerTag;}
     std::string getName() {return name;}
-    // PlayerState getState() {return state;}
-    // PlayerTag getTag() {return tag;}
+
     int getMaxHP() {return maxHealth;}
     int getCurrentHP() {return currentHealth;}
+
     float getVerticalVelocity() {return verticalVelocity;}
     void setVerticalVelocity(float newVelocity) {
         verticalVelocity = newVelocity;
