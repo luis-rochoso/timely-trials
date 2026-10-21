@@ -13,7 +13,7 @@ void renderPlayer(Entity &player, Color playerColor) {
     DrawRectangleRec(player.getHitbox(), playerColor);
 }
 
-void renderPlayerState(PlayerCharacter player) {
+void renderPlayerState(Entity &player) {
     int width = MeasureText(player.stateToCString(), 12);
     
     DrawText(player.stateToCString(),
