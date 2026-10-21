@@ -1,6 +1,7 @@
 #ifndef CONTROL_HPP
 #define CONTROL_HPP
 
+#include "string.h"
 #include "interface.hpp"
 
 // Constant definitions
@@ -70,8 +71,11 @@ void render() {
             renderPlayerState(map.player);
         EndMode2D();
 
+        DrawText(map.player.getName().c_str(),
+                 0.025*SCREEN_WIDTH, 0.025*SCREEN_HEIGHT, 30, WHITE);
+
         DrawText(TextFormat("HP: %i", map.player.getCurrentHP()),
-                 0.025*SCREEN_WIDTH, 0.02*SCREEN_HEIGHT, 30, WHITE);
+                 0.025*SCREEN_WIDTH, 0.0975*SCREEN_HEIGHT, 30, WHITE);
 
         DrawText(TextFormat("Delta (frame time): %f", GetFrameTime()),
                  0.8*SCREEN_WIDTH, 0.02*SCREEN_HEIGHT, 10, WHITE);
