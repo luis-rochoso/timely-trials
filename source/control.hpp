@@ -31,6 +31,9 @@ void init() {
 
 void update() {
     float delta = GetFrameTime();
+
+    switchCharacter(&map.player);
+
     updatePlayer(&map.player, map.getEnvItems(), delta);
     updateCamera(&cam, &map.player, map.getEnvItems(), delta, SCREEN_WIDTH, SCREEN_HEIGHT);
 }

@@ -118,10 +118,9 @@ class Entity {
     PlayerTag getPlayerTag() {return playerTag;}
     std::string getName() {return name;}
 
-    int getMaxHP() {return maxHealth;}
-    int getCurrentHP() {return currentHealth;}
-
-    float getVerticalVelocity() {return verticalVelocity;}
+    float getVerticalVelocity() {
+        return verticalVelocity;
+    }
     void setVerticalVelocity(float newVelocity) {
         verticalVelocity = newVelocity;
     }
@@ -148,6 +147,12 @@ class Entity {
         }
     }
 
+
+    int getMaxHP() {return maxHealth;}
+    int getCurrentHP() {return currentHealth;}
+    void setCurrentHP(int newHP) {
+        currentHealth = newHP;
+    }
     void takeDamage(int damage) {
 
         currentHealth -= damage;
@@ -156,7 +161,6 @@ class Entity {
         if (currentHealth > maxHealth) currentHealth = maxHealth;
 
     }
-
     void heal(int healing) {
 
         currentHealth += healing;

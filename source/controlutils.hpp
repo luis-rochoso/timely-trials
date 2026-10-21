@@ -79,4 +79,31 @@ void updateCamera(Camera2D *camera, Entity *player, std::vector<EnvItem>* envIte
 
 }
 
+void switchCharacter(Entity* player) {
+
+    Vector2 currentPos = player->position;
+    EntityState currentState = player->state;
+    float currentVelocity = player->getVerticalVelocity();
+    int currentHP = player->getCurrentHP();
+
+    if (IsKeyPressed(KEY_ONE)) {
+        *player = Entity(bakali);
+    }
+    else if (IsKeyPressed(KEY_TWO)) {
+        *player = Entity(belos);
+    }
+    else if (IsKeyPressed(KEY_THREE)) {
+        *player = Entity(switchy);
+    }
+    else if (IsKeyPressed(KEY_FOUR)) {
+        *player = Entity(valarash);
+    }
+
+    player->position = currentPos;
+    player->state = currentState;
+    player->setVerticalVelocity(currentVelocity);
+    player->setCurrentHP(currentHP);
+
+}
+
 #endif
