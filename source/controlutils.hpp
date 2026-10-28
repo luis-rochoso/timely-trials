@@ -3,10 +3,28 @@
 
 #include "entity.hpp"
 #include "level.hpp"
+#include <fstream>
 
 #define PLAYER_HOR_SPEED 200.0f
 #define PLAYER_JUMP_SPEED 350.0F
 #define G 700
+
+
+
+// std::unordered_map<std::string, Entity> loadEntities() {
+//     std::unordered_map<std::string, Entity> entities;
+
+//     std::ifstream file;
+//     file.open("../data/entities.dat");
+//     if (!file.is_open()) {return entities;}
+
+
+    
+
+//     file.close();
+
+//     return entities;
+// }
 
 void updatePlayer(Entity* player, std::vector<EnvItem>* envItems, float delta) {
     // Handles jumping

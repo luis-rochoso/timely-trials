@@ -132,7 +132,7 @@ class Entity {
         verticalVelocity -= decrement;
     }
     Rectangle getHitbox() {
-        return {position.x - (PLAYER_WIDTH/2), position.y - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT};
+        return {position.x - (width/2), position.y - height, width, height};
     }
     const char* stateToCString() {
         switch (state)

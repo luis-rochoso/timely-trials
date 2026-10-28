@@ -1,0 +1,8 @@
+lizardfolk
+name: Lizardfolk
+tag: enemy
+maxHealth: 25
+width: 50
+height: 90
+
+rakshasa

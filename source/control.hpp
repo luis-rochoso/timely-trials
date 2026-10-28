@@ -28,6 +28,7 @@ void init() {
     cam.rotation = 0.0f;
     cam.zoom = 1.0f;
 
+    // loadEntities();
     map.enemies.push_back(Entity(lizardfolk, {200, 200}));
     map.enemies.push_back(Entity(rakshasa, {100, 100}));
 }
