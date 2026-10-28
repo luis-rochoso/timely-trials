@@ -15,7 +15,7 @@ const std::vector<EnvItem> mapLayout = {
 
 // Global variables
 std::unordered_map<std::string, Entity> entities;
-Level map = Level(mapLayout);
+Level map;
 Camera2D cam = { 0 };
 
 // Functions
@@ -29,10 +29,12 @@ void init() {
     cam.zoom = 1.0f;
 
     entities = loadEntities();
+    map = loadLevel(entities);
+    map.setLayout(mapLayout);
 
-    for (auto ent : entities) {
-        map.enemies.push_back(ent.second);
-    }
+    // for (auto ent : entities) {
+    //     map.enemies.push_back(ent.second);
+    // }
 
 }
 
