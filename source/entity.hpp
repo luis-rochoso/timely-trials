@@ -118,6 +118,9 @@ class Entity {
     EnemyTag getEnemyTag() {return enemyTag;}
     PlayerTag getPlayerTag() {return playerTag;}
     std::string getName() {return name;}
+    std::string setName(std::string newName) {
+        name = newName;
+    }
 
     float getVerticalVelocity() {
         return verticalVelocity;
@@ -150,6 +153,9 @@ class Entity {
 
 
     int getMaxHP() {return maxHealth;}
+    void setMaxHP(int newHP) {
+        maxHealth = newHP;
+    }
     int getCurrentHP() {return currentHealth;}
     void setCurrentHP(int newHP) {
         currentHealth = newHP;

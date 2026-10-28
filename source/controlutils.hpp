@@ -4,27 +4,48 @@
 #include "entity.hpp"
 #include "level.hpp"
 #include <fstream>
+#include <unordered_map>
 
 #define PLAYER_HOR_SPEED 200.0f
 #define PLAYER_JUMP_SPEED 350.0F
 #define G 700
 
+std::unordered_map<std::string, Entity> loadEntities() {
+    std::unordered_map<std::string, Entity> entities;
 
+    std::ifstream file {"../data/entities.dat"};
+    if (!file.is_open()) {return entities;}
+        
+        std::string line;
+        while (getline(file, line)) {
+            Entity newEntity;
+            std::string key {""};
 
-// std::unordered_map<std::string, Entity> loadEntities() {
-//     std::unordered_map<std::string, Entity> entities;
+            // Get the key
+            key = line;
 
-//     std::ifstream file;
-//     file.open("../data/entities.dat");
-//     if (!file.is_open()) {return entities;}
+            // Get the name
+            getline(file, line);
+            std::string buffer {""};
+            for (int i = 6; line[i] != '\n'; ++i) {
+                buffer += line[i];
+            }
+            newEntity.setName(buffer);
 
+            // Get the HP
+            getline(file, line);
+            buffer = "";
+            for (int i = 11; line[i] != '\n'; ++i) {
+                buffer += line[i];
+            }
+            newEntity.setMaxHP(std::stoi(buffer));
 
+        }
     
+    file.close();
 
-//     file.close();
-
-//     return entities;
-// }
+    return entities;
+}
 
 void updatePlayer(Entity* player, std::vector<EnvItem>* envItems, float delta) {
     // Handles jumping

@@ -15,6 +15,7 @@ const std::vector<EnvItem> mapLayout = {
 };
 
 // Global variables
+// std::unordered_map<std::string, Entity> entities;
 Level map = Level(mapLayout);
 Camera2D cam = { 0 };
 
