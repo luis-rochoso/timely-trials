@@ -109,7 +109,23 @@ void switchCharacter(Entity* player) {
 void updateEnemies(std::vector<Entity> &enemies, std::vector<EnvItem>* envItems, float delta) {
 
     for (int i = 0; i < enemies.size(); ++i) {
+
         bool hitObstacle = false;
+        for (int j = 0; j < envItems->size(); ++j) {
+            EnvItem *envItem = &envItems->at(j);
+            Vector2 *position = &(enemies[i].position);
+            if (!envItem->traversable &&
+                envItem->hitbox.x <= position->x &&
+                envItem->hitbox.x + envItem->hitbox.width >= position->x &&
+                envItem->hitbox.y >= position->y &&
+                envItem->hitbox.y <= position->y + enemies[i].getVerticalVelocity()*delta)
+            {
+                hitObstacle = true;
+                enemies[i].setVerticalVelocity(0.0f);
+                position->y = envItem->hitbox.y;
+                break;
+            }
+        }
         
         // Handles falling
         if (!hitObstacle)
