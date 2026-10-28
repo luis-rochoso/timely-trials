@@ -114,6 +114,75 @@ std::unordered_map<std::string, Entity> loadEntities() {
     return entities;
 }
 
+Level loadLevel(std::unordered_map<std::string, Entity> &entityList) {
+    Level newLevel;
+
+    std::ifstream file;
+    file.open("./data/level.dat");
+    if (!file.is_open()) {
+        cout << "File not opened." << endl;
+        return newLevel;
+    }
+        std::string line;
+        while(getline(file, line)) {
+            std::string buffer {""};
+
+            if (line == "enemies:") {
+                buffer = "";
+                while (getline(file, line) and line != "") {
+
+                    // Get key
+                    std::string key {""};
+                    for (int i = 0; line[i] != ' '; ++i) {
+                        key += line[i];
+                    }
+
+                    // Get position
+                    Vector2 pos;
+                    bool dimensionCounter {0};
+                    for (int i = key.size() + 1; i < line.size(); ++i) {
+                        if (dimensionCounter == 0) {
+                            // Reads the X value after parsing over a space
+                            if (line[i] == ' ') {
+                                pos.x = std::stoi(buffer);
+                                buffer = "";
+                                dimensionCounter = 1;
+                                continue;
+                            }
+                            buffer += line[i];
+                        }
+                        else {
+                            // Reads the Y value when reaching the end of the line
+                            buffer += line[i];
+                            if (i + 1 == line.size()) {
+                                pos.y = std::stoi(buffer);
+                                buffer = "";
+                            }
+                    
+                        }
+
+                    }
+
+                    // Search the entity list for the key
+                    for (auto ent : entityList) {
+                        if (ent.first == key) {
+                            Entity toSpawn = entityList[key];
+                            toSpawn.position = pos;
+                            newLevel.enemies.push_back(toSpawn);
+                        }
+                    }
+                    
+                }
+
+            }
+
+        }
+
+    file.close();
+
+    return newLevel;
+}
+
 void updatePlayer(Entity* player, std::vector<EnvItem>* envItems, float delta) {
     // Handles jumping
     if (IsKeyDown(KEY_UP) && player->state != airborne) {

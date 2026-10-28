@@ -21,9 +21,9 @@ class Level {
     Entity player;
     std::vector<Entity> enemies;
 
-    Level();
+    Level() = default;
 
-    Level(std::vector<EnvItem> layout) {
+    void setLayout(std::vector<EnvItem> layout) {
         environmentItems = layout;
     }
 
