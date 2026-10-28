@@ -1,7 +1,6 @@
 #ifndef CONTROL_HPP
 #define CONTROL_HPP
 
-#include "string.h"
 #include "interface.hpp"
 
 // Constant definitions
@@ -15,6 +14,7 @@ const std::vector<EnvItem> mapLayout = {
 };
 
 // Global variables
+std::unordered_map<std::string, Entity> entities;
 Level map = Level(mapLayout);
 Camera2D cam = { 0 };
 
@@ -28,9 +28,12 @@ void init() {
     cam.rotation = 0.0f;
     cam.zoom = 1.0f;
 
-    // loadEntities();
-    map.enemies.push_back(Entity(lizardfolk, {200, 200}));
-    map.enemies.push_back(Entity(rakshasa, {100, 100}));
+    entities = loadEntities();
+
+    for (auto ent : entities) {
+        map.enemies.push_back(ent.second);
+    }
+
 }
 
 void update() {

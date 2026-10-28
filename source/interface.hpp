@@ -24,23 +24,13 @@ void renderPlayerState(Entity &player) {
 void renderEnemies(std::vector<Entity> &enemies) {
 
     for (int i = 0; i < enemies.size(); ++i) {
-        Color enemyColor;
-
-        switch (enemies[i].getEnemyTag())
-        {
-        case lizardfolk:
-            enemyColor = DARKGREEN;
-            break;
-
-        case rakshasa:
-            enemyColor = ORANGE;
-            break;
-        
-        default:
-            break;
-        }
-
-        DrawRectangleRec(enemies[i].getHitbox(), enemyColor);
+        DrawRectangleRec(enemies[i].getHitbox(), enemies[i].getColor());
+        const char* name = enemies[i].getName().c_str();
+        int width = MeasureText(name, 12);
+    
+        DrawText(name,
+                 enemies[i].position.x - (width/2), enemies[i].position.y - (1.2 * enemies[i].getHeight()),
+                 12, WHITE);
     }
 
 }
