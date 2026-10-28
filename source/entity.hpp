@@ -16,10 +16,6 @@ enum EntityTag {
     enemy, player
 };
 
-enum EnemyTag {
-    notEnemy, lizardfolk, rakshasa
-};
-
 enum PlayerTag {
     notPlayer, bakali, belos, switchy, valarash
 };
@@ -32,7 +28,6 @@ class Entity {
     private:
     std::string name      {""};
     EntityTag tag         {enemy};
-    EnemyTag enemyTag     {notEnemy};
     PlayerTag playerTag   {notPlayer};
     
 
@@ -41,6 +36,7 @@ class Entity {
     float verticalVelocity {0};
     float width            {25};
     float height           {25};
+    Color color            {255, 255, 255, 255};
 
     // MeleeAttack meleeAtk;
     // ProjectileAttack rangedAtk;
@@ -83,42 +79,41 @@ class Entity {
         }
     }
 
-    Entity(EnemyTag enTag, Vector2 spawnPos) { // Enemy
-        tag = enemy;
-        enemyTag = enTag;
+    // Entity(EnemyTag enTag, Vector2 spawnPos) { // Enemy
+    //     tag = enemy;
+    //     enemyTag = enTag;
 
-        switch (enemyTag)
-        {
-        case lizardfolk:
-            maxHealth = 25;
-            width = 50;
-            height = 90;
-            break;
+    //     switch (enemyTag)
+    //     {
+    //     case lizardfolk:
+    //         maxHealth = 25;
+    //         width = 50;
+    //         height = 90;
+    //         break;
 
-        case rakshasa:
-            maxHealth = 50;
-            width = 50;
-            height = 80;
-            break;
+    //     case rakshasa:
+    //         maxHealth = 50;
+    //         width = 50;
+    //         height = 80;
+    //         break;
         
-        default:
-            maxHealth = 25;
-            width = 50;
-            height = 80;
-            break;
-        }
+    //     default:
+    //         maxHealth = 25;
+    //         width = 50;
+    //         height = 80;
+    //         break;
+    //     }
 
-        currentHealth = maxHealth;
-        position = spawnPos;
-    }
+    //     currentHealth = maxHealth;
+    //     position = spawnPos;
+    // }
 
-    bool isEnemy()  {return enemyTag != notEnemy;}
-    bool isPlayer() {return playerTag != notPlayer;}
+    bool isEnemy()  {return tag == enemy;}
+    bool isPlayer() {return tag == player;}
 
-    EnemyTag getEnemyTag() {return enemyTag;}
     PlayerTag getPlayerTag() {return playerTag;}
     std::string getName() {return name;}
-    std::string setName(std::string newName) {
+    void setName(std::string newName) {
         name = newName;
     }
 
@@ -134,9 +129,23 @@ class Entity {
     void decreaseVerticalVelocity(float decrement) {
         verticalVelocity -= decrement;
     }
+
+    void setWidth(int newW) {
+        width = newW;
+    }
+    int getWidth() {return width;}
+    void setHeight(int newH) {
+        height = newH;
+    }
+    int getHeight() {return height;}
     Rectangle getHitbox() {
         return {position.x - (width/2), position.y - height, width, height};
     }
+    void setColor(Color newColor) {
+        color = newColor;
+    }
+    Color getColor() {return color;}
+
     const char* stateToCString() {
         switch (state)
         {

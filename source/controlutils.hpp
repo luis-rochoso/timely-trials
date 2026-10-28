@@ -1,10 +1,14 @@
 #ifndef CONTROLUTILS_HPP
 #define CONTROLUTILS_HPP
 
+#include "string.h"
 #include "entity.hpp"
 #include "level.hpp"
 #include <fstream>
 #include <unordered_map>
+#include <iostream>
+
+using namespace std;
 
 #define PLAYER_HOR_SPEED 200.0f
 #define PLAYER_JUMP_SPEED 350.0F
@@ -13,32 +17,95 @@
 std::unordered_map<std::string, Entity> loadEntities() {
     std::unordered_map<std::string, Entity> entities;
 
-    std::ifstream file {"../data/entities.dat"};
-    if (!file.is_open()) {return entities;}
+    std::ifstream file;
+    file.open("./data/entities.dat");
+    if (!file.is_open()) {
+        cout << "File not opened." << endl;
+        return entities;
+    }
         
+        cout << "File opened!" << endl;
         std::string line;
         while (getline(file, line)) {
+            if (line == "") {continue;}
             Entity newEntity;
             std::string key {""};
 
             // Get the key
             key = line;
+            cout << "Reading for key " << key << endl;
 
             // Get the name
             getline(file, line);
             std::string buffer {""};
-            for (int i = 6; line[i] != '\n'; ++i) {
+            for (int i = 6; i < line.size(); ++i) {
                 buffer += line[i];
             }
             newEntity.setName(buffer);
+            cout << "name: " << buffer << endl;
 
             // Get the HP
             getline(file, line);
             buffer = "";
-            for (int i = 11; line[i] != '\n'; ++i) {
+            for (int i = 11; i < line.size(); ++i) {
                 buffer += line[i];
             }
             newEntity.setMaxHP(std::stoi(buffer));
+            cout << "HP: " << buffer << endl;
+
+            // Get the width
+            getline(file, line);
+            buffer = "";
+            for (int i = 7; i < line.size(); ++i) {
+                buffer += line[i];
+            }
+            newEntity.setWidth(std::stoi(buffer));
+            cout << "width: " << buffer << endl;
+
+            // Get the height
+            getline(file, line);
+            buffer = "";
+            for (int i = 8; i < line.size(); ++i) {
+                buffer += line[i];
+            }
+            newEntity.setHeight(std::stoi(buffer));
+            cout << "height: " << buffer << endl;
+
+            // Get the color
+            getline(file, line);
+            buffer = "";
+            Color entityColor {255, 255, 255, 255};
+            int channelCounter = 0;
+            for (int i = 7; i < line.size(); ++i) {
+                if (line[i] != ',') {
+                    buffer += line[i];
+                }
+                else {
+                    switch (channelCounter)
+                    {
+                    case 0:
+                        entityColor.r = std::stoi(buffer);
+                        cout << "red: " << buffer << endl;
+                        break;
+                    
+                    case 1:
+                        entityColor.g = std::stoi(buffer);
+                        cout << "green: " << buffer << endl;
+                        break;
+                    
+                    default:
+                        entityColor.b = std::stoi(buffer);
+                        cout << "blue: " << buffer << endl;
+                        break;
+                    }
+                    buffer = "";
+                    ++channelCounter;
+                }
+                
+            }
+            newEntity.setColor(entityColor);
+
+            entities[key] = newEntity;
 
         }
     
